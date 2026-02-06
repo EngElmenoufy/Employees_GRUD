@@ -1,0 +1,26 @@
+<div class="px-4 pb-4 bg-white">
+  <table class="block">
+    <thead class="text-lg block font-semibold">
+      <app-table-item [isHeader]="true" [items]="headerItems" />
+    </thead>
+
+    <tbody class="block">
+      @for (employee of (employees()?.slice(startIndex(), endIndex()) ?? []) | paginate: { id: 'foo',
+      itemsPerPage: 5,
+      currentPage: currentPage(),
+      totalItems: totalItems() }; track employee.empId) {
+      <app-table-item class="block odd:bg-gray-50" [employee]="employee" />
+      }
+    </tbody>
+  </table>
+
+  <div class="flex justify-between items-center pt-4">
+    <p class="text-sm text-[#4c5d83]">Showing <span class="font-bold">5</span> out of <span
+        class="font-bold">{{totalItems()}}</span> entries</p>
+    <pagination-controls id="foo" (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)"
+      [maxSize]="5" [responsive]="true" previousLabel="Previous" nextLabel="Next"
+      screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
+  </div>
+
+</div>

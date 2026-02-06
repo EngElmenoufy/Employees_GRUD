@@ -1,0 +1,25 @@
+<tr class="p-4 grid grid-cols-[2rem_1fr_1fr_1fr_1fr_5rem] items-center gap-4 border-y border-gray-100">
+  @for (item of (items() ?? employeeItems()); track $index) {
+  <td>
+    @if (item.isCheckbox) {
+    <input type="checkbox" class="block w-5 h-5">
+    }
+    @else if (item.isActions){
+    <div class="flex justify-evenly items-center">
+      <button type="button" class="cursor-pointer">
+        <app-icon icon="edit" color="#ffc720" size="24" />
+      </button>
+      <button type="button" class="cursor-pointer">
+        <app-icon icon="delete" color="#dc3545" size="24" />
+      </button>
+    </div>
+    }@else {
+    @if (isHeader()) {
+    <h5>{{item.name}}</h5>
+    }@else {
+    <p>{{item.name}}</p>
+    }
+    }
+  </td>
+  }
+</tr>
