@@ -1,26 +1,39 @@
-<div class="px-4 pb-4 bg-white">
-  <table class="block">
-    <thead class="text-lg block font-semibold">
-      <app-table-item [isHeader]="true" [items]="headerItems" />
+<div class="px-4 pb-4 bg-white h-[calc(100vh-104px)] flex flex-col">
+  <table class="block grow overflow-y-auto">
+    <thead class="text-lg bg-white block font-semibold sticky top-0">
+      <app-table-item [(allChecked)]="isAllChecked" [isHeader]="true" [items]="headerItems" />
     </thead>
 
     <tbody class="block">
+      @if (isLoading()) {
+      @for (item of [1,2,3,4,5,6,7,8,9,10]; track $index) {
+      <app-table-item-loading class="block odd:bg-gray-50" />
+      }
+      }@else {
       @for (employee of (employees()?.slice(startIndex(), endIndex()) ?? []) | paginate: { id: 'foo',
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       currentPage: currentPage(),
       totalItems: totalItems() }; track employee.empId) {
-      <app-table-item class="block odd:bg-gray-50" [employee]="employee" />
+      <app-table-item [hasGlobalChecked]="isAllChecked()" class="block odd:bg-gray-50" [employee]="employee" />
+      }@empty {
+      <tr class="block py-6 text-center">
+        <p class="text-lg">No employees found.</p>
+      </tr>
+      }
       }
     </tbody>
   </table>
 
+  @if (!isLoading() && employees()?.length) {
   <div class="flex justify-between items-center pt-4">
-    <p class="text-sm text-[#4c5d83]">Showing <span class="font-bold">5</span> out of <span
+    <p class="text-sm text-[#4c5d83]">Showing <span class="font-bold">10</span> out of <span
         class="font-bold">{{totalItems()}}</span> entries</p>
+
     <pagination-controls id="foo" (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)"
       [maxSize]="5" [responsive]="true" previousLabel="Previous" nextLabel="Next"
       screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
     </pagination-controls>
   </div>
+  }
 
 </div>

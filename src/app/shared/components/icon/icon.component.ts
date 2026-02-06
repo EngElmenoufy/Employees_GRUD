@@ -8,7 +8,7 @@ import { Component, computed, input } from '@angular/core';
 })
 export class IconComponent {
   icon = input<string>();
-  size = input<string>();
+  size = input<string>('24');
   color = input<string>('#000');
 
   sizePx = computed(() => this.size() + 'px');

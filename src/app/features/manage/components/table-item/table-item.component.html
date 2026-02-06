@@ -1,8 +1,10 @@
-<tr class="p-4 grid grid-cols-[2rem_1fr_1fr_1fr_1fr_5rem] items-center gap-4 border-y border-gray-100">
+<tr [class.bg-blue-100]="isChecked()"
+  class="p-4 grid grid-cols-[2rem_1fr_1fr_1fr_1fr_5rem] items-center gap-4 border-y transition-colors border-gray-100">
   @for (item of (items() ?? employeeItems()); track $index) {
   <td>
     @if (item.isCheckbox) {
-    <input type="checkbox" class="block w-5 h-5">
+    <input [formControl]="checkControl" type="checkbox"
+      class="block w-5 h-5 checked:accent-blue-800 transition-colors cursor-pointer">
     }
     @else if (item.isActions){
     <div class="flex justify-evenly items-center">
@@ -15,7 +17,29 @@
     </div>
     }@else {
     @if (isHeader()) {
+    @if (item.canSort) {
+    <button type="button" class="group cursor-pointer flex justify-between items-center gap-4 text-start w-full"
+      (click)="onSort(item.name?.toLocaleLowerCase())">
+      {{item.name}}
+      @if (item.name?.toLowerCase() === sortedBy()) {
+      @if (sortedType() === 'asc') {
+      <span>
+        <app-icon icon="arrow-up" color="#99a1af" />
+      </span>
+      }@else if (sortedType() === 'desc') {
+      <span>
+        <app-icon icon="arrow-down" color="#99a1af" />
+      </span>
+      }
+      }@else {
+      <span class="opacity-0  group-hover:opacity-100 transition-opacity">
+        <app-icon icon="arrow-up" color="#99a1af" />
+      </span>
+      }
+    </button>
+    }@else {
     <h5>{{item.name}}</h5>
+    }
     }@else {
     <p>{{item.name}}</p>
     }
