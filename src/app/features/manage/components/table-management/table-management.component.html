@@ -1,4 +1,4 @@
-<div class="px-4 pb-4 bg-white h-[calc(100vh-104px)] flex flex-col">
+<div class="px-4 pb-4 bg-white max-h-[calc(100vh-104px)] flex flex-col">
   <table class="block grow overflow-y-auto">
     <thead class="text-lg bg-white block font-semibold sticky top-0">
       <app-table-item [(allChecked)]="isAllChecked" [isHeader]="true" [items]="headerItems" />
@@ -16,8 +16,8 @@
       totalItems: totalItems() }; track employee.empId) {
       <app-table-item [hasGlobalChecked]="isAllChecked()" class="block odd:bg-gray-50" [employee]="employee" />
       }@empty {
-      <tr class="block py-6 text-center">
-        <p class="text-lg">No employees found.</p>
+      <tr class="h-full py-6 flex items-center justify-center">
+        <p class="text-xl">No employees found.</p>
       </tr>
       }
       }
