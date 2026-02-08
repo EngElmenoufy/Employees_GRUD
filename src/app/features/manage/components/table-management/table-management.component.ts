@@ -73,10 +73,10 @@ export class TableManagementComponent implements OnInit {
 
   private setSubscriptionToParams(): void {
     this.route.queryParamMap.subscribe((params) => {
-      const page = params.get('page');
+      const page = Number(params.get('page'));
 
       if (page) {
-        this.setData(Number(page));
+        this.setData(page);
       }
     });
   }
