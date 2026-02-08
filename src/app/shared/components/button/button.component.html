@@ -1,4 +1,11 @@
-<button class="btn flex items-center gap-2" [type]="type()">
-  <ng-content select="[icon]" />
-  {{text()}}
+<button class="btn btn-disabled" [disabled]="isLoading()" [type]="type()" (click)="onPress()">
+  @if (isLoading()) {
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="border-4 border-gray-200 size-6 rounded-full border-t-transparent animate-spin"></div>
+  </div>
+  }
+  <span [class.invisible]="isLoading()" class="flex items-center gap-2">
+    <ng-content select="[icon]" />
+    {{text()}}
+  </span>
 </button>

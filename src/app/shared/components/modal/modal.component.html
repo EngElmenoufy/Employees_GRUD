@@ -1,0 +1,13 @@
+<div class="max-w-xl w-full absolute top-1/2 start-1/2 -translate-1/2 z-10 bg-white">
+  <div class="px-4 py-5 flex items-center justify-between gap-4 border-b border-gray-200">
+    <h3 class="text-xl font-semibold text-gray-600">{{header() | titlecase}}</h3>
+
+    <button type="button" class="btn-icon" (click)="onClose()">
+      <app-icon icon="close" color="#4a5565" />
+    </button>
+  </div>
+
+  <ng-content />
+</div>
+
+<div role="button" class="fixed top-0 start-0 w-screen h-screen bg-black/50" (click)="onClose()"></div>

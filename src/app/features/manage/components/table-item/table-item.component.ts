@@ -23,6 +23,7 @@ export class TableItemComponent implements OnInit {
   private readonly employeesManagementService = inject(
     EmployeesManagementService,
   );
+
   isHeader = input<boolean>(false);
   items = input<Item[]>();
   employee = input<Employee>();
@@ -41,6 +42,13 @@ export class TableItemComponent implements OnInit {
         this.checkControl !== undefined
       ) {
         this.checkControl.setValue(this.hasGlobalChecked()!);
+      }
+    });
+
+    effect(() => {
+      const hasSameValue = this.checkControl.value === this.allChecked();
+      if (!hasSameValue && this.allChecked() !== undefined) {
+        this.checkControl.setValue(this.allChecked()!);
       }
     });
   }
@@ -105,5 +113,23 @@ export class TableItemComponent implements OnInit {
     if (sortBy !== 'name' && sortBy !== 'address') return;
 
     this.employeesManagementService.setSort(sortBy as 'name' | 'address');
+  }
+
+  onEdit(): void {
+    if (this.employee() === undefined) return;
+
+    this.employeesManagementService.setSelectedEmployeeForEdit(
+      this.employee()!,
+    );
+    this.employeesManagementService.isOpenEdit.set(true);
+  }
+
+  onDelete(): void {
+    if (this.employee() === undefined) return;
+
+    this.employeesManagementService.setSelectedEmployeeIdForDelete(
+      this.employee()!.empId,
+    );
+    this.employeesManagementService.isOpenDelete.set(true);
   }
 }

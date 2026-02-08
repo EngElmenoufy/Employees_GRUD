@@ -1,4 +1,4 @@
-<main class="min-h-screen bg-muted">
+<main class="min-h-screen bg-muted overflow-hidden">
   <div class="overflow-x-auto">
     <div class="min-w-2xl max-w-5xl p-4 h-screen mx-auto">
       <app-header-management class="sticky top-0" />
@@ -7,3 +7,14 @@
     </div>
   </div>
 </main>
+
+@if (isOpenAdd()) {
+<app-add [(isOpen)]="isOpenAdd" />
+}
+
+@if (isOpenEdit()) {
+<app-edit [employee]="selectedEmployeeForEdit()" [(isOpen)]="isOpenEdit" />
+}
+@if (isOpenDelete()) {
+<app-delete [(isOpen)]="isOpenDelete" />
+}

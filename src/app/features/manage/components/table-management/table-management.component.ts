@@ -6,6 +6,7 @@ import { EmployeeService } from '../../../../core/services/employee.service';
 import { Employee } from '../../../../core/models/employee.interface';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TableItemLoadingComponent } from '../table-item-loading/table-item-loading.component';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-management',
@@ -14,18 +15,20 @@ import { TableItemLoadingComponent } from '../table-item-loading/table-item-load
   styleUrl: './table-management.component.css',
 })
 export class TableManagementComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly employeeService = inject(EmployeeService);
   private readonly employeesManagementService = inject(
     EmployeesManagementService,
   );
 
   headerItems!: Item[];
-  employees = signal<Employee[] | undefined>(undefined);
+  employees = this.employeeService.employees;
+  totalItems = this.employeeService.totalItems;
+  isLoading = this.employeeService.isLoading;
   currentPage = signal<number>(1);
-  totalItems = signal<number>(1);
   startIndex = signal<number>(0);
   endIndex = signal<number>(10);
-  isLoading = signal<boolean>(false);
   isAllChecked = signal<boolean>(false);
   sortedBy = this.employeesManagementService.sortBy;
   sortedType = this.employeesManagementService.sortType;
@@ -39,7 +42,8 @@ export class TableManagementComponent implements OnInit {
   ngOnInit(): void {
     this.initHeaderItems();
 
-    this.getAllEmployees();
+    this.employeeService.getAllEmployees();
+    this.setSubscriptionToParams();
   }
 
   private initHeaderItems(): void {
@@ -67,25 +71,34 @@ export class TableManagementComponent implements OnInit {
     ];
   }
 
-  private getAllEmployees(): void {
-    this.isLoading.set(true);
+  private setSubscriptionToParams(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      const page = params.get('page');
 
-    this.employeeService.getAllEmployees().subscribe({
-      next: (res: Employee[]) => {
-        this.employees.set(res);
-        this.totalItems.set(res.length);
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.isLoading.set(false);
-      },
+      if (page) {
+        this.setData(Number(page));
+      }
+    });
+  }
+
+  private setQueryParams(params: Params): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: params,
+      queryParamsHandling: 'merge',
     });
   }
 
   onPageChanged(page: number): void {
+    this.setQueryParams({ page });
+  }
+
+  private setData(page: number): void {
     this.startIndex.set(10 * (page - 1));
     this.endIndex.set(10 * page);
     this.currentPage.set(page);
+    this.isAllChecked.set(false);
+    this.employeesManagementService.resetSelectedEmployees();
   }
 
   sortEmployees(

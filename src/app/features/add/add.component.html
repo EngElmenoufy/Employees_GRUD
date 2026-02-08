@@ -1,1 +1,22 @@
-<p>add works!</p>
+<app-modal header="Add Employee" [(isOpen)]="isOpen">
+  <form [formGroup]="addEmployeeForm" (ngSubmit)="onAdd()">
+    <div class="px-4 py-5 space-y-4">
+      <app-input class="block" label="Name" id="name" placeholder="Enter employee's name" [control]="nameControl" />
+      <app-input class="block" label="Email" type="email" id="email" placeholder="Enter employee's email"
+        [control]="emailControl" />
+      <app-input class="block" label="Address" type="textarea" id="address" placeholder="Enter employee's address"
+        [control]="addressControl" />
+      <app-input class="block" label="Phone" type="number" id="phone" placeholder="Enter employee's phone"
+        [control]="phoneControl" />
+    </div>
+
+    <div class="bg-[#ecf0f1] px-4 py-6 flex items-center justify-end gap-4">
+      <button class="btn-text" type="button" (click)="onClose()">
+        Cancel
+      </button>
+
+      <app-button type="submit" [isLoading]="isLoading()"
+        class="inline-block bg-success hover:bg-dark-success text-white px-3" text="Add"></app-button>
+    </div>
+  </form>
+</app-modal>

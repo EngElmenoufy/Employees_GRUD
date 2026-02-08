@@ -12,6 +12,22 @@
 
 @layer components {
   .btn {
-    @apply py-2 px-4 transition-shadow cursor-pointer not-disabled:hover:shadow-lg;
+    @apply relative py-2 px-4 transition-shadow cursor-pointer not-disabled:hover:shadow-lg;
+  }
+
+  .btn-icon {
+    @apply p-2 transition-colors cursor-pointer hover:bg-gray-200;
+  }
+
+  .btn-text {
+    @apply p-2 text-gray-500 hover:text-gray-600 transition-colors hover:underline cursor-pointer;
+  }
+
+  .btn-disabled {
+    @apply disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:shadow-none;
+  }
+
+  .input {
+    @apply w-full placeholder:text-gray-500 p-1.5 border border-gray-300 focus:shadow-[0_0_2px_#0069a8] focus:border-transparent outline-0;
   }
 }

@@ -8,10 +8,10 @@
     }
     @else if (item.isActions){
     <div class="flex justify-evenly items-center">
-      <button type="button" class="cursor-pointer">
+      <button type="button" class="cursor-pointer" (click)="onEdit()">
         <app-icon icon="edit" color="#ffc720" size="24" />
       </button>
-      <button type="button" class="cursor-pointer">
+      <button type="button" class="cursor-pointer" (click)="onDelete()">
         <app-icon icon="delete" color="#dc3545" size="24" />
       </button>
     </div>

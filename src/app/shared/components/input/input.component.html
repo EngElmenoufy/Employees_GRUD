@@ -1,0 +1,16 @@
+@if (label()) {
+<label [for]="id()" class="block text-gray-500 font-medium mb-1">{{label()}}</label>
+}
+@if (type() === 'textarea') {
+<textarea [id]="id()" class="input h-24" [name]="id()" [formControl]="control()" [placeholder]="placeholder()"
+  [attr.aria-label]="label()"></textarea>
+}
+@else if (type() === 'number') {
+<input appOnlyDigits type="text" [id]="id()" class="input" [name]="id()" [formControl]="control()"
+  [placeholder]="placeholder()" [attr.aria-label]="label()">
+} @else {
+<input [type]="type()" [id]="id()" class="input" [name]="id()" [formControl]="control()" [placeholder]="placeholder()"
+  [attr.aria-label]="label()">
+}
+
+<app-error-validation [control]="control()" [label]="label()" />

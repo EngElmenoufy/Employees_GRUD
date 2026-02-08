@@ -1,0 +1,21 @@
+@if (control().touched && control().invalid) {
+<div class="bg-red-50 mt-2 text-sm text-red-800">
+  @if (control().getError('email')) {
+  <span class="block p-2">
+    Please enter a valid email address (e.g. name&#64;example.com).
+  </span>
+  }
+
+  @if (control().getError('required')) {
+  <span class="block p-2">
+    {{label()}} is required.
+  </span>
+  }
+
+  @if (control().getError('pattern')) {
+  <span class="block p-2">
+    Please enter a valid phone number.
+  </span>
+  }
+</div>
+}

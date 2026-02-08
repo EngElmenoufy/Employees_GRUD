@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -12,4 +12,10 @@ import { Component, input } from '@angular/core';
 export class ButtonComponent {
   text = input<string>();
   type = input<string>('button');
+  isLoading = input<boolean>(false);
+  press = output<void>();
+
+  onPress(): void {
+    this.press.emit();
+  }
 }
