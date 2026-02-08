@@ -1,9 +1,11 @@
-<main class="h-screen bg-muted min-w-fit">
-  <div class="min-w-2xl max-w-5xl p-4 h-screen mx-auto">
+<main class="h-screen max-w-screen bg-muted min-w-fit overflow-hidden">
+  <!-- <div class="overflow-x-auto"> -->
+  <div class="min-w-2xl max-w-5xl p-4 mx-auto">
     <app-header-management />
 
     <app-table-management />
   </div>
+  <!-- </div> -->
 </main>
 
 @if (isOpenAdd()) {
